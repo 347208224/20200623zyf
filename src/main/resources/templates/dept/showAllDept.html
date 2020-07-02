@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+    <script th:src="@{/layui/layui.js}"></script>
+</head>
+<body>
+<!--  <h1>this is my page!</h1>
+  <table border="1px">
+      <tr>
+          <td>编号</td>
+          <td>部门名称</td>
+          <td>排序</td>
+          <td>状态</td>
+      </tr>
+      <tr th:each="dept:${deptList}">
+          <td th:text="${dept.deptId}"></td>
+          <td th:text="${dept.deptName}"></td>
+          <td th:text="${dept.getOrderNum()}"></td>
+          <td th:text="${dept.status}"></td>
+      </tr>
+
+  </table>-->
+<table id="demo" lay-filter="test"></table>
+<script>
+
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 312
+            ,url: '/dept/selectAllDeptAjax' //数据接口
+            ,page: true //开启分页
+            ,limit:5
+            ,limits:[5,10,15,20,25,50]
+            ,cols: [
+                [ //表头
+                    {field: 'deptId', title: 'ID', width:80, sort: true, fixed: 'left'}
+                    ,{field: 'deptName', title: '部门名称', width:120}
+                    ,{field: 'orderNum', title: '排序', width:120}
+                    ,{field: 'status', title: '状态', width:120,
+                    templet: function (d) {
+                        if(d.status==0){
+                            return '<button type="button" class="layui-btn layui-btn-xs">正常</button>'
+                        }else{
+                            return '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger">禁用</button>'
+                        }
+                    }}
+                    ,{field: 'createBy', title: '创建人', width:120}
+                    ,{field: 'createTime', title: '创建时间', width:120}
+                    ,{field: 'updateBy', title: '修改人', width:120}
+                    ,{field: 'updateTime', title: '修改时间', width:120}
+                ]]
+        });
+
+    });
+</script>
+</body>
+</html>
